@@ -209,24 +209,18 @@
     
     <div class="controls">
         <div class="import-options">
-            <label><input type="radio" name="importMode" value="replace" checked> 🔄 替換現有資料</label>
-            <label><input type="radio" name="importMode" value="append"> ➕ 附加到現有資料</label>
+            <label><input type="radio" name="importMode" value="replace"> 🔄 替換現有資料</label>
+            <label><input type="radio" name="importMode" value="append" checked> ➕ 附加到現有資料</label>
         </div>
         <div class="btn-container">
             <label class="upload-btn">
                 📁 點此匯入 CSV 檔案
-                <input type="file" id="csvFileInput" accept=".csv">
+                <input type="file" id="csvFileInput" accept=".csv" multiple>
             </label>
             <button id="deleteBtn" class="delete-btn">❌ 刪除選取項目</button>
             <button id="clearBtn" class="clear-btn">🗑️ 清除所有資料</button>
         </div>
-        <input type="text" id="searchInput" class="search-bar" placeholder="🔍 搜尋單字、翻譯或例句內容...">
-        <select id="sortSelect" class="sort-select">
-            <option value="original">🕒 預設排序 (原始順序)</option>
-            <option value="asc">🅰️ 字母順序 (A-Z)</option>
-            <option value="desc">🇿 字母順序 (Z-A)</option>
-        </select>
-    </div>
+        </div>
 
     <div id="statusText">正在連線至雲端...</div>
     <div id="dictionaryContainer"></div>
