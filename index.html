@@ -62,111 +62,149 @@
             color: white;
             box-sizing: border-box;
         }
-        .upload-btn {
-            background-color: var(--accent);
-            box-shadow: 0 4px 6px rgba(52, 152, 219, 0.2);
-        }
-        .delete-btn {
-            background-color: #e67e22;
-            box-shadow: 0 4px 6px rgba(230, 126, 34, 0.2);
-        }
-        .clear-btn {
-            background-color: #e74c3c;
-            box-shadow: 0 4px 6px rgba(231, 76, 60, 0.2);
-        }
+        .upload-btn { background-color: var(--accent); }
+        .delete-btn { background-color: #e67e22; }
+        .clear-btn { background-color: #e74c3c; }
         .upload-btn:hover, .delete-btn:hover, .clear-btn:hover { opacity: 0.9; }
-        #csvFileInput { display: none; }
+        input[type="file"] { display: none; }
         
-        #searchInput, #sortSelect {
+        .search-bar, .sort-select {
             width: 100%;
-            padding: 12px 15px;
+            padding: 12px;
             border: 1px solid var(--border);
             border-radius: 8px;
-            font-size: 16px;
+            font-size: 1em;
             box-sizing: border-box;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.02);
-            background-color: white;
         }
-        #searchInput:focus, #sortSelect:focus { outline: none; border-color: var(--accent); }
-        #sortSelect { cursor: pointer; }
+        .search-bar:focus, .sort-select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+        }
+        
+        #statusText {
+            text-align: right;
+            font-size: 0.9em;
+            color: var(--text-muted);
+            margin-bottom: 15px;
+        }
 
         .card {
-            background-color: var(--card-bg);
-            padding: 20px;
+            background: var(--card-bg);
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            padding: 25px;
             margin-bottom: 20px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
+            position: relative;
         }
-        .card-header { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 10px; }
-        .card-title-group { display: flex; align-items: center; gap: 12px; }
-        .word-title { font-size: 1.6em; font-weight: bold; color: var(--primary); margin: 0; }
-        
-        /* 圓圈勾選方塊樣式 */
-        .circle-checkbox {
-            appearance: none;
-            -webkit-appearance: none;
-            width: 22px;
-            height: 22px;
-            border: 2px solid #bdc3c7;
-            border-radius: 50%;
-            outline: none;
-            cursor: pointer;
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 15px;
+        }
+        .card-title-group {
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: background-color 0.2s, border-color 0.2s;
+            gap: 15px;
+        }
+        .word-title {
+            color: var(--primary);
             margin: 0;
-            flex-shrink: 0;
+            font-size: 1.8em;
+        }
+        .circle-checkbox {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1.5em;
+            height: 1.5em;
+            border: 2px solid var(--border);
+            border-radius: 50%;
+            display: grid;
+            place-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+        .circle-checkbox::before {
+            content: "";
+            width: 0.8em;
+            height: 0.8em;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em var(--accent);
         }
         .circle-checkbox:checked {
-            background-color: #e67e22;
-            border-color: #e67e22;
+            border-color: var(--accent);
         }
-        .circle-checkbox:checked::after {
-            content: '✓';
-            color: white;
-            font-size: 13px;
+        .circle-checkbox:checked::before {
+            transform: scale(1);
+        }
+        .ipa { color: var(--text-muted); font-family: monospace; font-size: 1.1em; }
+        .translation {
+            font-size: 1.3em;
             font-weight: bold;
+            color: var(--text-main);
+            margin-bottom: 15px;
         }
-        .circle-checkbox:hover {
-            border-color: #e67e22;
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 20px;
         }
-
-        .ipa { font-family: "Courier New", Courier, monospace; color: var(--text-muted); font-size: 0.9em; }
-        .translation { font-size: 1.1em; font-weight: 500; color: #27ae60; margin-bottom: 15px; padding-left: 34px; }
-        .tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 15px; padding-left: 34px; }
         .tag {
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.8em;
-            font-weight: bold;
-            background-color: #e8f4fd;
+            background: #e8f4f8;
             color: var(--accent);
-        }
-        .tag.pos { background-color: #fdf2e9; color: #d35400; }
-        .tag.source { background-color: #f4f6f7; color: #7f8c8d; border: 1px solid #bdc3c7; }
-        .tag.ai { background-color: #f9e79f; color: #b7950b; }
-        .section { margin-top: 15px; border-top: 1px solid var(--border); padding-top: 12px; margin-left: 34px; }
-        .section-title { font-size: 0.85em; color: #95a5a6; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; font-weight: bold; }
-        .content-text { white-space: pre-wrap; font-size: 0.95em; color: #444; }
-        .audio-link {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 12px;
-            background-color: #f1f2f6;
-            color: var(--primary);
-            text-decoration: none;
-            border-radius: 6px;
-            font-size: 0.9em;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
             font-weight: 500;
         }
-        .audio-link:hover { background-color: #dfe4ea; }
-        .empty-state { text-align: center; color: var(--text-muted); padding: 40px 0; }
-        .status-text { text-align: right; font-size: 0.85em; color: var(--text-muted); margin-top: -10px; margin-bottom: 15px; }
+        .tag.pos { background: #fdf2e9; color: #d35400; }
+        .tag.source { background: #eaeded; color: #7f8c8d; }
+        .tag.ai { background: #f4ecf8; color: #8e44ad; }
+        .section {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--border);
+        }
+        .section-title {
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        .content-text {
+            white-space: pre-wrap;
+            color: var(--text-main);
+        }
+        .audio-link {
+            display: inline-block;
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 15px;
+            background: #f0f8ff;
+            border-radius: 8px;
+            transition: background 0.2s;
+        }
+        .audio-link:hover { background: #e1f0fa; }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-style: italic;
+        }
     </style>
 </head>
 <body>
-
     <h2>📚 我的專屬詞彙庫 (雲端同步版)</h2>
     
     <div class="controls">
@@ -175,54 +213,49 @@
             <label><input type="radio" name="importMode" value="append"> ➕ 附加到現有資料</label>
         </div>
         <div class="btn-container">
-            <label for="csvFileInput" class="upload-btn">📁 點此匯入 CSV 檔案</label>
-            <button class="delete-btn" id="deleteBtn">❌ 刪除選取項目</button>
-            <button class="clear-btn" id="clearBtn">🗑️ 清除所有資料</button>
+            <label class="upload-btn">
+                📁 點此匯入 CSV 檔案
+                <input type="file" id="csvFileInput" accept=".csv">
+            </label>
+            <button id="deleteBtn" class="delete-btn">❌ 刪除選取項目</button>
+            <button id="clearBtn" class="clear-btn">🗑️ 清除所有資料</button>
         </div>
-        <input type="file" id="csvFileInput" accept=".csv">
-        <input type="text" id="searchInput" placeholder="🔍 搜尋單字、翻譯或例句內容...">
-        
-        <select id="sortSelect">
-            <option value="default">🕒 預設排序 (原始順序)</option>
-            <option value="asc">🔤 單字排序 (A → Z 遞增)</option>
-            <option value="desc">🔤 單字排序 (Z → A 遞減)</option>
+        <input type="text" id="searchInput" class="search-bar" placeholder="🔍 搜尋單字、翻譯或例句內容...">
+        <select id="sortSelect" class="sort-select">
+            <option value="original">🕒 預設排序 (原始順序)</option>
+            <option value="asc">🅰️ 字母順序 (A-Z)</option>
+            <option value="desc">🇿 字母順序 (Z-A)</option>
         </select>
     </div>
 
-    <div id="statusText" class="status-text">連線中...</div>
-
-    <div id="dictionaryContainer">
-        <div class="empty-state">正在從雲端載入字庫，請稍候...</div>
-    </div>
+    <div id="statusText">正在連線至雲端...</div>
+    <div id="dictionaryContainer"></div>
 
     <script type="module">
         import { createClient } from 'https://esm.sh/@supabase/supabase-js@2';
 
-        // ⚠️ 請在此處填入您從 Supabase Dashboard 取得的連線資訊
+        // ⚠️ 乾淨的 SUPABASE 網址，沒有多餘的 /rest/v1/
         const SUPABASE_URL = 'https://rdxtwzyebyllsuqajwcp.supabase.co';
-        const SUPABASE_KEY = 'sb_publishable_Zi50Xmq-wobc0IJMGwgWQA_UfJxDW2r';
-        
+        const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJkeHR3enllYnlsbHN1cWFqd2NwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI1NjE5MjcsImV4cCI6MjA5ODEzNzkyN30.iu_-J6S9vEpisMV1nhtepNilsMCacZdvmXehzIOIxdk';
+       
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
         let dictionaryData = [];
 
-        // 當網頁載入完成，直接去雲端抓取最新資料
         window.addEventListener('DOMContentLoaded', loadDataFromCloud);
 
-        // 綁定所有操作事件
         document.getElementById('csvFileInput').addEventListener('change', handleCsvImport);
         document.getElementById('searchInput').addEventListener('input', displayData);
         document.getElementById('sortSelect').addEventListener('change', displayData);
         document.getElementById('deleteBtn').addEventListener('click', deleteSelected);
         document.getElementById('clearBtn').addEventListener('click', clearDictionary);
 
-        // 功能 A：從雲端載入所有單字資料
         async function loadDataFromCloud() {
             document.getElementById('statusText').innerText = '正在讀取雲端資料...';
             try {
                 let { data, error } = await supabase
                     .from('dictionary')
                     .select('*')
-                    .order('id', { ascending: true }); // 按資料庫預設流水號排序
+                    .order('id', { ascending: true });
 
                 if (error) throw error;
 
@@ -237,7 +270,6 @@
             }
         }
 
-        // 功能 B：處理 CSV 匯入，並同步上傳雲端
         function handleCsvImport(e) {
             const file = e.target.files[0];
             if (!file) return;
@@ -245,23 +277,29 @@
             reader.onload = async function(e) {
                 const text = e.target.result;
                 const newData = parseCSV(text);
-                if (newData.length === 0) return;
+                if (newData.length === 0) {
+                    alert('未解析到有效數據，請檢查 CSV 格式。');
+                    return;
+                }
 
                 const importMode = document.querySelector('input[name="importMode"]:checked').value;
-                document.getElementById('statusText').innerText = '正在同步到雲端...';
+                document.getElementById('statusText').innerText = '正在處理同步...';
 
                 try {
                     if (importMode === 'replace') {
-                        // 如果選擇「替換」，先清空雲端資料表所有資料，再插入新資料
-                        const { error: delError } = await supabase.from('dictionary').delete().neq('id', 0);
+                        const { error: delError } = await supabase.from('dictionary').delete().gt('id', 0);
                         if (delError) throw delError;
                     }
 
-                    // 將新解析的資料批次上傳到 Supabase
-                    const { error: insError } = await supabase.from('dictionary').insert(newData);
-                    if (insError) throw insError;
+                    // 採用分批（每 20 筆一組）寫入，防止長字串大請求被 Supabase 拒絕
+                    const chunkSize = 20;
+                    for (let i = 0; i < newData.length; i += chunkSize) {
+                        const chunk = newData.slice(i, i + chunkSize);
+                        const { error: insError } = await supabase.from('dictionary').insert(chunk);
+                        if (insError) throw insError;
+                    }
 
-                    // 上傳成功後，重新從雲端抓取最新完整狀態
+                    alert('資料成功同步至雲端！');
                     await loadDataFromCloud();
                 } catch (err) {
                     alert('資料同步至雲端時發生錯誤：' + err.message);
@@ -273,7 +311,6 @@
             e.target.value = '';
         }
 
-        // 功能 C：刪除勾選項目
         async function deleteSelected() {
             const checkboxes = document.querySelectorAll('.card-selector:checked');
             if (checkboxes.length === 0) {
@@ -299,12 +336,11 @@
             }
         }
 
-        // 功能 D：清除所有資料
         async function clearDictionary() {
             if (confirm('確定要永久清空雲端資料庫內所有的字詞紀錄嗎？')) {
                 document.getElementById('statusText').innerText = '正在清空雲端資料...';
                 try {
-                    const { error } = await supabase.from('dictionary').delete().neq('id', 0);
+                    const { error } = await supabase.from('dictionary').delete().gt('id', 0);
                     if (error) throw error;
                     await loadDataFromCloud();
                 } catch (err) {
@@ -314,39 +350,34 @@
             }
         }
 
-        // 更新收錄進度狀態列
         function updateStatus() {
             document.getElementById('statusText').innerText = `目前收錄：${dictionaryData.length} 個詞彙 (已與雲端同步)`;
         }
 
-        // 處理畫面過濾（搜尋）與排序邏輯
         function displayData() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
             const sortValue = document.getElementById('sortSelect').value;
             
             let processedData = [...dictionaryData];
             
-            // 搜尋關鍵字過濾
             if (query !== '') {
                 processedData = processedData.filter(item => {
-                    const word = (item['Word or Phrase'] || '').toLowerCase();
-                    const translation = (item['Translation'] || '').toLowerCase();
-                    const meaning = (item['Meaning'] || '').toLowerCase();
+                    const word = (item.word_or_phrase || '').toLowerCase();
+                    const translation = (item.translation || '').toLowerCase();
+                    const meaning = (item.meaning || '').toLowerCase();
                     return word.includes(query) || translation.includes(query) || meaning.includes(query);
                 });
             }
             
-            // 字母排序
             if (sortValue === 'asc') {
-                processedData.sort((a, b) => (a['Word or Phrase'] || '').localeCompare(b['Word or Phrase'] || '', 'en'));
+                processedData.sort((a, b) => (a.word_or_phrase || '').localeCompare(b.word_or_phrase || '', 'en'));
             } else if (sortValue === 'desc') {
-                processedData.sort((a, b) => (b['Word or Phrase'] || '').localeCompare(a['Word or Phrase'] || '', 'en'));
+                processedData.sort((a, b) => (b.word_or_phrase || '').localeCompare(a.word_or_phrase || '', 'en'));
             }
             
             renderCards(processedData);
         }
 
-        // CSV 字串解析
         function parseCSV(text) {
             const result = [];
             let row = [];
@@ -374,20 +405,32 @@
             
             const headers = result[0].map(h => h.trim());
             const data = [];
+            
+            // 這裡已更新為最新的 Supabase 欄位名稱 (snake_case)
+            const validFields = [
+                'word_or_phrase', 'pronunciation_ipa', 'translation', 'part_of_speech', 
+                'entry_type', 'register_and_variety', 'source', 'ai_agent', 'meaning', 
+                'collocations_and_expressions', 'derived_or_related', 
+                'additional_notes', 'pronunciation_link'
+            ];
+            
             for (let i = 1; i < result.length; i++) {
                 const obj = {};
+                let hasData = false;
                 for (let j = 0; j < headers.length; j++) {
-                    if (headers[j]) {
-                        // 欄位名稱對齊雲端資料庫的欄位名稱
-                        obj[headers[j]] = result[i][j] ? result[i][j].trim() : '';
+                    if (headers[j] && validFields.includes(headers[j])) {
+                        const val = result[i][j] ? result[i][j].trim() : '';
+                        obj[headers[j]] = val;
+                        if (val !== '') hasData = true;
                     }
                 }
-                data.push(obj);
+                if (hasData && obj.word_or_phrase) {
+                    data.push(obj);
+                }
             }
             return data;
         }
 
-        // 渲染單字卡片
         function renderCards(data) {
             const container = document.getElementById('dictionaryContainer');
             container.innerHTML = '';
@@ -396,32 +439,33 @@
                 return;
             }
             data.forEach(item => {
-                if (!item['Word or Phrase']) return;
+                if (!item.word_or_phrase) return; // 安全防護：沒有單字的資料不渲染
+                
                 const card = document.createElement('div');
                 card.className = 'card';
                 let html = `
                     <div class="card-header">
                         <div class="card-title-group">
                             <input type="checkbox" class="circle-checkbox card-selector" data-id="${item.id}">
-                            <h3 class="word-title">${item['Word or Phrase']}</h3>
+                            <h3 class="word-title">${item.word_or_phrase}</h3>
                         </div>
-                        ${item['Pronunciation IPA'] ? `<span class="ipa">${item['Pronunciation IPA']}</span>` : ''}
+                        ${item.pronunciation_ipa ? `<span class="ipa">${item.pronunciation_ipa}</span>` : ''}
                     </div>
-                    ${item['Translation'] ? `<div class="translation">${item['Translation']}</div>` : ''}
+                    ${item.translation ? `<div class="translation">${item.translation}</div>` : ''}
                     <div class="tags">
-                        ${item['Part of Speech'] ? `<span class="tag pos">${item['Part of Speech']}</span>` : ''}
-                        ${item['Entry Type'] ? `<span class="tag">${item['Entry Type']}</span>` : ''}
-                        ${item['Register and Variety'] ? `<span class="tag">${item['Register and Variety']}</span>` : ''}
-                        ${item['Source'] ? `<span class="tag source">📖 ${item['Source']}</span>` : ''}
-                        ${item['Ai Agent'] ? `<span class="tag ai">🤖 由 ${item['Ai Agent']} 生成</span>` : ''}
+                        ${item.part_of_speech ? `<span class="tag pos">${item.part_of_speech}</span>` : ''}
+                        ${item.entry_type ? `<span class="tag">${item.entry_type}</span>` : ''}
+                        ${item.register_and_variety ? `<span class="tag">${item.register_and_variety}</span>` : ''}
+                        ${item.source ? `<span class="tag source">📖 ${item.source}</span>` : ''}
+                        ${item.ai_agent ? `<span class="tag ai">🤖 由 ${item.ai_agent} 生成</span>` : ''}
                     </div>
                 `;
 
                 const sectionsToRender = [
-                    { title: '意思與例句 (Meaning)', key: 'Meaning' },
-                    { title: '搭配詞與慣用語 (Collocations)', key: 'Collocations and Fixed Expressions' },
-                    { title: '衍生與相關詞彙 (Derived/Related)', key: 'Derived or related words or phrases' },
-                    { title: '補充筆記 (Additional Notes)', key: 'Additional Notes' }
+                    { title: '意思與例句 (Meaning)', key: 'meaning' },
+                    { title: '搭配詞與慣用語 (Collocations)', key: 'collocations_and_expressions' },
+                    { title: '衍生與相關詞彙 (Derived/Related)', key: 'derived_or_related' },
+                    { title: '補充筆記 (Additional Notes)', key: 'additional_notes' }
                 ];
 
                 sectionsToRender.forEach(section => {
@@ -435,14 +479,14 @@
                     }
                 });
 
-                if (item['Pronunciation Link'] && item['Pronunciation Link'].trim() !== '') {
+                if (item.pronunciation_link && item.pronunciation_link.trim() !== '') {
                     html += `
                         <div class="section" style="border: none;">
-                            <a href="${item['Pronunciation Link'].trim()}" 
+                            <a href="${item.pronunciation_link.trim()}" 
                                target="_blank" 
                                rel="noopener noreferrer" 
                                class="audio-link"
-                               onclick="window.open('${item['Pronunciation Link'].trim()}', '_blank'); return false;">
+                               onclick="window.open('${item.pronunciation_link.trim()}', '_blank'); return false;">
                                🔊 點此聆聽發音
                             </a>
                         </div>
