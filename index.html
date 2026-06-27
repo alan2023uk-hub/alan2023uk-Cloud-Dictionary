@@ -187,12 +187,12 @@
 </head>
 <body>
 
-    <h2>📚 我的專屬詞彙庫 (雲端同步版)</h2>
+    <h2>📚 我的專屬詞彙庫 (Supabase 雲端版)</h2>
     
     <div class="controls">
         <div class="import-options">
-            <label><input type="radio" name="importMode" value="append" checked> ➕ 附加到現有資料</label>
-            <label><input type="radio" name="importMode" value="replace"> 🔄 替換現有資料</label>
+            <label><input type="radio" name="importMode" value="replace" checked> 🔄 替換現有資料</label>
+            <label><input type="radio" name="importMode" value="append"> ➕ 附加到現有資料</label>
         </div>
         <div class="btn-container">
             <label for="csvFileInput" class="upload-btn">📁 點此匯入 CSV 檔案</label>
@@ -205,7 +205,6 @@
         
         <select id="sortSelect">
             <option value="default">🕒 預設排序 (原始順序)</option>
-          
             <option value="asc">🔤 單字排序 (A → Z 遞增)</option>
             <option value="desc">🔤 單字排序 (Z → A 遞減)</option>
         </select>
@@ -277,6 +276,7 @@
             document.getElementById('statusText').innerText = '正在處理檔案...';
             let allNewData = [];
 
+            // 異步讀取所有選取的檔案並合併數據
             for (let i = 0; i < files.length; i++) {
                 const text = await new Promise(resolve => {
                     const reader = new FileReader();
@@ -325,7 +325,6 @@
                 return;
             }
             
-            // 安全防線：排除任何 NaN 或未定義的異常 ID，防止破壞整個請求流程
             const idsToDelete = Array.from(checkboxes)
                 .map(cb => parseInt(cb.getAttribute('data-id')))
                 .filter(id => !isNaN(id));
@@ -448,7 +447,6 @@
                 return;
             }
             data.forEach(item => {
-                // 安全機制：若不具備主鍵 id 或單字內容，則不予渲染，保障控制項目的健全度
                 if (!item['word_or_phrase'] || !item.id) return;
                 
                 const card = document.createElement('div');
