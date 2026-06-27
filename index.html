@@ -270,15 +270,24 @@
             }
         }
 
-        function handleCsvImport(e) {
-            const file = e.target.files[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = async function(e) {
-                const text = e.target.result;
-                const newData = parseCSV(text);
-                if (newData.length === 0) {
-                    alert('未解析到有效數據，請檢查 CSV 格式。');
+           function handleCsvImport(e) {
+            const files = e.target.files;
+            if (files.length === 0) return;
+
+            // 處理多個檔案
+            const processFiles = async () => {
+                let allNewData = [];
+                for (let file of files) {
+                    const text = await new Promise((resolve) => {
+                        const reader = new FileReader();
+                        reader.onload = (e) => resolve(e.target.result);
+                        reader.readAsText(file);
+                    });
+                    allNewData = allNewData.concat(parseCSV(text));
+                }
+
+                if (allNewData.length === 0) {
+                    alert('未解析到有效數據。');
                     return;
                 }
 
@@ -287,14 +296,12 @@
 
                 try {
                     if (importMode === 'replace') {
-                        const { error: delError } = await supabase.from('dictionary').delete().gt('id', 0);
-                        if (delError) throw delError;
+                        await supabase.from('dictionary').delete().gt('id', 0);
                     }
 
-                    // 採用分批（每 20 筆一組）寫入，防止長字串大請求被 Supabase 拒絕
                     const chunkSize = 20;
-                    for (let i = 0; i < newData.length; i += chunkSize) {
-                        const chunk = newData.slice(i, i + chunkSize);
+                    for (let i = 0; i < allNewData.length; i += chunkSize) {
+                        const chunk = allNewData.slice(i, i + chunkSize);
                         const { error: insError } = await supabase.from('dictionary').insert(chunk);
                         if (insError) throw insError;
                     }
@@ -302,13 +309,12 @@
                     alert('資料成功同步至雲端！');
                     await loadDataFromCloud();
                 } catch (err) {
-                    alert('資料同步至雲端時發生錯誤：' + err.message);
+                    alert('同步錯誤：' + err.message);
                     loadDataFromCloud();
                 }
-                document.getElementById('searchInput').value = '';
             };
-            reader.readAsText(file);
-            e.target.value = '';
+            processFiles();
+            e.target.value = ''; // 重置 input 以便下次再次選擇同樣檔案
         }
 
         async function deleteSelected() {
