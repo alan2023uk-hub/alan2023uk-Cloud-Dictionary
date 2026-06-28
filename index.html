@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>詞彙庫 (雲端版)</title>
+    <title>我的專屬詞彙庫 (Supabase 雲端版)</title>
     <style>
         :root {
             --primary: #2c3e50;
@@ -187,7 +187,7 @@
 </head>
 <body>
 
-    <h2>📚 詞彙庫 (雲端版)</h2>
+    <h2>📚 我的專屬詞彙庫 (Supabase 雲端版)</h2>
     
     <div class="controls">
         <div class="import-options">
@@ -224,23 +224,25 @@
        
         const supabase = createClient(SUPABASE_URL, SUPABASE_KEY);
         let dictionaryData = [];
+        
         const fieldMapping = {
-            'Word or Phrase': 'word_or_phrase',
-            'Translation': 'translation',
-            'Meaning': 'meaning',
-            'Part of Speech': 'part_of_speech',
-            'Pronunciation IPA': 'pronunciation_ipa',
-            'Derived or related words or phrases': 'derived_or_related',
-            'Relationship menu': 'relationship_menu',
-            'Cross Reference': 'cross_reference',
-            'Entry Type': 'entry_type',
-            'Pronunciation Link': 'pronunciation_link',
-            'Register and Variety': 'register_and_variety',
-            'Collocations and Fixed Expressions': 'collocations_and_expressions',
-            'Source': 'source',
-            'Additional Notes': 'additional_notes',
-            'Ai Agent': 'ai_agent'
+            'word_or_phrase': 'word_or_phrase',
+            'translation': 'translation',
+            'meaning': 'meaning',
+            'part_of_speech': 'part_of_speech',
+            'pronunciation_ipa': 'pronunciation_ipa',
+            'derived_or_related': 'derived_or_related',
+            'relationship_menu': 'relationship_menu',
+            'cross_reference': 'cross_reference',
+            'entry_type': 'entry_type',
+            'pronunciation_link': 'pronunciation_link',
+            'register_and_variety': 'register_and_variety',
+            'collocations_and_expressions': 'collocations_and_expressions',
+            'source': 'source',
+            'additional_notes': 'additional_notes',
+            'ai_agent': 'ai_agent'
         };
+
         window.addEventListener('DOMContentLoaded', loadDataFromCloud);
 
         document.getElementById('csvFileInput').addEventListener('change', handleCsvImport);
